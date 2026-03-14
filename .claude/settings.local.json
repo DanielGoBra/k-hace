@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sed 's/:.*//')",
+      "Bash(sed 's/^  //')",
+      "Bash(flutter analyze:*)",
+      "Bash(find c:Demosmicrofinanzas-ai-v2que_se_hace -type f -name .env*)",
+      "Bash(find c:Demosmicrofinanzas-ai-v2que_se_hace -type f \\\\\\(-name *test* -o -name *seed* \\\\\\))",
+      "Bash(grep -r \"password\\\\|credential\\\\|demo\\\\|test\" c:Demosmicrofinanzas-ai-v2que_se_hace --include=*.dart)",
+      "Bash(find c:Demosmicrofinanzas-ai-v2que_se_hace -type f -name *.dart)",
+      "Bash(xargs grep:*)",
+      "Bash(find c:Demosmicrofinanzas-ai-v2que_se_haceandroid -type f \\\\\\(-name *.gradle -o -name build.gradle* \\\\\\))",
+      "Bash(find c:Demosmicrofinanzas-ai-v2que_se_hace -type f -name *.properties -o -name *.json)",
+      "Bash(find c:Demosmicrofinanzas-ai-v2que_se_hace -type f \\\\\\(-name *.json -o -name *.yaml -o -name *.yml \\\\\\))",
+      "Bash(grep -r \"https://\\\\|api\\\\|URL\" c:Demosmicrofinanzas-ai-v2que_se_hacelib --include=*.dart)",
+      "Bash(find \"c:\\\\Demos\\\\microfinanzas-ai-v2\\\\que_se_hace\\\\lib\" -type d -name \"*service\\\\|*repository\\\\|*data*\")",
+      "Bash(grep -r \"TODO\\\\|FIXME\\\\|secret\\\\|key\\\\|credential\" c:Demosmicrofinanzas-ai-v2que_se_hacelib --include=*.dart)",
+      "Bash(flutter build:*)"
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+# ── Flutter / Dart ─────────────────────────────────────────────
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+/coverage/
+**/doc/api/
+**/ios/Flutter/.last_build_id
+*.g.dart
+*.freezed.dart
+
+# ── Platform build artifacts ──────────────────────────────────
+/android/app/debug/
+/android/app/profile/
+/android/app/release/
+/android/.gradle/
+/android/local.properties
+/ios/Pods/
+/ios/.symlinks/
+
+# ── Secrets & environment ─────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.jks
+*.keystore
+key.properties
+google-services.json
+GoogleService-Info.plist
+
+# ── IDE ───────────────────────────────────────────────────────
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/launch.json
+.vscode/settings.json
+
+# ── OS ────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# ── Symbolication / obfuscation ──────────────────────────────
+app.*.symbols
+app.*.map.json
+
+# ── Debug info ────────────────────────────────────────────────
+/debug-info/
+
+# ── Misc ──────────────────────────────────────────────────────
+*.log
+*.class
+*.pyc
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/

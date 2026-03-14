@@ -1,0 +1,36 @@
+include: package:very_good_analysis/analysis_options.yaml
+
+analyzer:
+  errors:
+    missing_required_param: error
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "build/**"
+    - ".dart_tool/**"
+
+linter:
+  rules:
+    # Relaxed rules for project style
+    public_member_api_docs: false
+    lines_longer_than_80_chars: false
+    flutter_style_todos: false
+    one_member_abstracts: false
+    sort_pub_dependencies: false
+    # Allow relative imports within lib/ (project convention)
+    always_use_package_imports: false
+    # Constructor ordering is not enforced
+    sort_constructors_first: false
+    # Allow positional booleans for simple setters
+    avoid_positional_boolean_parameters: false
+    # Allow catch-all for unexpected exceptions in auth
+    avoid_catches_without_on_clauses: false
+    # Allow redundant defaults for readability
+    avoid_redundant_argument_values: false
+    # Allow required params in any order
+    always_put_required_named_parameters_first: false
+    # Allow directives in logical order
+    directives_ordering: false
+    # Allow doc comment style flexibility
+    missing_code_block_language_in_doc_comment: false
+    comment_references: false
