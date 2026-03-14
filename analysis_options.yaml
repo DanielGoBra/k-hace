@@ -1,0 +1,22 @@
+include: package:very_good_analysis/analysis_options.yaml
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/generated/**"
+  errors:
+    # Permite usar tipos inferidos donde el contexto es claro
+    always_specify_types: ignore
+    # Relajado para el proyecto — se activará incrementalmente
+    public_member_api_docs: ignore
+
+linter:
+  rules:
+    # ── Relajaciones incrementales ──────────────────────────────
+    # Se irán activando a medida que el proyecto madure
+    public_member_api_docs: false
+    # Permite constructores const donde sea práctico sin obligar siempre
+    prefer_const_constructors_in_immutables: false
+    # Permite usar dynamic cuando el tipo externo no está tipado
+    avoid_dynamic_calls: false
