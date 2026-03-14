@@ -1,6 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../../../../core/di/providers.dart';
 import '../../../profile/presentation/providers/profile_providers.dart';
 import '../../domain/lugar.dart';
 
@@ -9,28 +9,12 @@ final selectedCategoryProvider = StateProvider<String>(
   (ref) => 'Toda la ciudad',
 );
 
-// ── Supabase data ──────────────────────────────────────────
+// ── All lugares (from repository) ────────────────────────────
 
-/// Fetches all lugares from Supabase; falls back to mockLugares on error.
 final lugaresProvider = FutureProvider<List<Lugar>>((ref) async {
-  try {
-    final data = await Supabase.instance.client
-        .from('lugares')
-        .select()
-        .not('lat', 'is', null)
-        .not('lng', 'is', null)
-        .limit(200);
-
-    if (data.isEmpty) return mockLugares;
-
-    return data
-        .map<Lugar>((json) => Lugar.fromSupabase(json))
-        .where((l) => l.latitud != 0.0 || l.longitud != 0.0)
-        .toList();
-  } catch (e) {
-    debugPrint('Error fetching lugares: $e');
-    return mockLugares;
-  }
+  final repo = ref.read(lugarRepositoryProvider);
+  final result = await repo.getLugares();
+  return result.valueOrNull ?? [];
 });
 
 /// Sync convenience — returns loaded lugares or empty list while loading.
@@ -44,12 +28,10 @@ final filteredLugaresProvider = Provider<List<Lugar>>((ref) {
   final category = ref.watch(selectedCategoryProvider);
   final lugares = ref.watch(lugaresListProvider);
 
-  // While still loading, fall back to mock data for responsive UI
+  // While loading, fall back to mock data for responsive UI
   final source = lugares.isEmpty ? mockLugares : lugares;
 
-  if (category == 'Toda la ciudad') {
-    return source;
-  }
+  if (category == 'Toda la ciudad') return source;
 
   return source.where((lugar) => lugar.categoria == category).toList();
 });
@@ -65,24 +47,10 @@ final lugarByIdProvider = FutureProvider.family<Lugar?, String>((
   final found = cached.where((l) => l.id == id).firstOrNull;
   if (found != null) return found;
 
-  // 2. Check mock data
-  final mock = mockLugares.where((l) => l.id == id).firstOrNull;
-  if (mock != null) return mock;
-
-  // 3. Direct query to Supabase
-  try {
-    final data = await Supabase.instance.client
-        .from('lugares')
-        .select()
-        .eq('id', int.parse(id))
-        .maybeSingle();
-
-    if (data != null) return Lugar.fromSupabase(data);
-  } catch (e) {
-    debugPrint('Error fetching lugar $id: $e');
-  }
-
-  return null;
+  // 2. Query repository
+  final repo = ref.read(lugarRepositoryProvider);
+  final result = await repo.getLugarById(id);
+  return result.valueOrNull;
 });
 
 // ── Recommended for user (based on interests) ────────────

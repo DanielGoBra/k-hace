@@ -1,14 +1,20 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../../core/di/providers.dart';
 import '../../domain/evento.dart';
 
 final selectedEventCategoryProvider = StateProvider<String>((ref) => 'Todos');
 
 final selectedEventDateProvider = StateProvider<DateTime?>((ref) => null);
 
-final eventosProvider = Provider<List<Evento>>((ref) => mockEventos);
+final eventosProvider = FutureProvider<List<Evento>>((ref) async {
+  final repo = ref.read(eventoRepositoryProvider);
+  final result = await repo.getEventos();
+  return result.valueOrNull ?? [];
+});
 
 final filteredEventosProvider = Provider<List<Evento>>((ref) {
-  final eventos = ref.watch(eventosProvider);
+  final eventos = ref.watch(eventosProvider).valueOrNull ?? [];
   final category = ref.watch(selectedEventCategoryProvider);
   final selectedDate = ref.watch(selectedEventDateProvider);
 
